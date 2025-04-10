@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Markdown Previewer</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.7/marked.min.js"></script>
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    textarea,
+    #preview {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+      min-height: 300px;
+      background: white;
+    }
+
+    textarea {
+      resize: vertical;
+      font-family: monospace;
+    }
+
+    #preview {
+      overflow-y: auto;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        flex-direction: row;
+      }
+      textarea,
+      #preview {
+        width: 48%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Markdown Previewer</h1>
+
+  <div class="container">
+    <!-- User Story #1: Textarea with id="editor" -->
+    <textarea id="editor"></textarea>
+
+    <!-- User Story #2: Preview element with id="preview" -->
+    <div id="preview"></div>
+  </div>
+
+  <script>
+    const editor = document.getElementById('editor');
+    const preview = document.getElementById('preview');
+
+    // Default markdown content (for User Stories #5 and #6)
+    const defaultMarkdown = `# Welcome to my Markdown Previewer!
+
+## This is a sub-heading...
+
+[Visit my GitHub](https://github.com/EmicJoykiller)
+
+Inline code: \`<div></div>\`
+
+\`\`\`
+// Multi-line code block:
+function greet(name) {
+  return \`Hello, \${name}!\`;
+}
+\`\`\`
+
+- List item 1
+- List item 2
+
+> This is a blockquote!
+
+**Bold Text**
+
+![React Logo](https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg)
+`;
+
+    // Configure marked.js to allow breaks (for bonus feature)
+    marked.setOptions({
+      breaks: true // Ensures carriage returns are treated as line breaks
+    });
+
+    // Function to render markdown in the preview area (for User Story #4)
+    const renderMarkdown = (text) => {
+      preview.innerHTML = marked(text); // Convert markdown to HTML and display in preview
+    };
+
+    // Set the initial markdown content in the editor and render it
+    editor.value = defaultMarkdown;
+    renderMarkdown(defaultMarkdown);
+
+    // Update the preview dynamically as the user types in the editor (User Story #3)
+    editor.addEventListener('input', (e) => {
+      renderMarkdown(e.target.value);
+    });
+  </script>
+</body>
+</html>
